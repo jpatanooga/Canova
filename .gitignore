@@ -1,12 +1,26 @@
-*.class
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
+
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+*.class
+*.jpage
+.classpath
+.settings
+.project
+app.properties
+log4j.properties
 
 # Package Files #
 *.jar
 *.war
 *.ear
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+# Generated stuff
+target/
+testData/
+build/
+
