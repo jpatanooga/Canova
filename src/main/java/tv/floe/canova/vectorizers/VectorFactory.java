@@ -35,7 +35,7 @@ public class VectorFactory<K, V> {
 	 * @param key
 	 * @param value
 	 */
-	public void convert( K key, V value ) {
+	public void convert( K key, V value, Vector vec_input, Vector vec_output ) {
 		
 		
 	}
