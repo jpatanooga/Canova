@@ -10,6 +10,8 @@ import java.util.Properties;
 
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapred.FileInputFormat;
 import org.apache.hadoop.mapred.InputFormat;
 import org.apache.hadoop.mapred.InputSplit;
@@ -17,6 +19,8 @@ import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapred.RecordReader;
 import org.apache.hadoop.mapred.Reporter;
 import org.apache.hadoop.mapred.TextInputFormat;
+
+import tv.floe.canova.vector.engine.VectorMapTaskEngine;
 
 
 
@@ -42,7 +46,14 @@ public class SerialExecDriver {
 
 	protected InputSplit[] splits;	
 	
+	String inputFormatClassname = "org.apache.hadoop.mapred.TextInputFormat"; //"tv.floe.canova.input.format";
 	InputFormat inputFormat = null;
+	
+	public SerialExecDriver( String propsFile ) {
+		
+		this.app_properties_file = propsFile;
+		
+	}
 	
 	/**
 	 * TODO: Instantiate the input format from the property file's conf'd class
@@ -120,6 +131,47 @@ public class SerialExecDriver {
 			// throw ex; // TODO: be nice
 			System.out.println(ex);
 		}
+		
+		// get input format class
+		
+		Class<?> inputFormat_clazz;
+		try {
+			inputFormat_clazz = Class.forName(props
+					.getProperty("tv.floe.canova.input.format"));
+			
+			Constructor<?> inputFormat_ctor = inputFormat_clazz.getConstructor();
+			
+			this.inputFormat = (InputFormat) inputFormat_ctor.newInstance(); // new
+																	// Object[]
+																	// {
+																	// ctorArgument
+																	// });
+
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
 
 		// setup msg arrays
 
@@ -130,12 +182,14 @@ public class SerialExecDriver {
 		
 		// app.input.path
 		
-		Path splitPath = new Path( props.getProperty("app.input.path") );
+		
+		
+		Path splitPath = new Path( props.getProperty("tv.floe.canova.input.path") );
 
 		System.out.println( "app.input.path = " + splitPath );
 		
 		// TODO: work on this, splits are generating for everything in dir
-		InputSplit[] splits = computeSplits(splitPath, job);
+		this.splits = computeSplits(splitPath, job);
 
 		System.out.println("split count: " + splits.length);
 
@@ -152,10 +206,17 @@ public class SerialExecDriver {
 	 * - Create an instance of the MapTask
 	 * - read K/V pairs from the input format's RecordReader til EOF
 	 * 
+	 * 
+	 * 
+	 * TODO: questions
+	 * - how do we infer or setup the template variables?
+	 * @throws IOException 
+	 * 
 	 */
-	public static void run() {
+	public static void run() throws IOException {
 		
-		SerialExecDriver driver = new SerialExecDriver();
+		SerialExecDriver driver = new SerialExecDriver( "src/test/resources/single_process.unit_test.properties" );
+		VectorMapTaskEngine vector_engine = new VectorMapTaskEngine();
 		
 		// read props
 		// compute splist
@@ -169,18 +230,29 @@ public class SerialExecDriver {
 			RecordReader rr = driver.getRecordReaderForSplit(driver.splits[x], driver.defaultConf );
 			// for each record, 
 			
+			LongWritable key = (LongWritable) rr.createKey();
+			Text val = (Text) rr.createValue();
+			
 			while (rr.getProgress() < 1.0) {
 				
 				// get the next k/v pair
-				rr.n
+				boolean gotKey = rr.next( key, val );
 				
 				// feed it to the map task harness w the vector engine
+				
+				System.out.println( "line: " + val.toString() ); 
 				
 			}
 			
 		}
 		
 		
+		
+	}
+	
+	public static void main(String[] args) throws IOException {
+
+		SerialExecDriver.run();
 		
 	}
 
