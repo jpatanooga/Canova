@@ -186,7 +186,7 @@ public class SerialExecDriver {
 		
 		Path splitPath = new Path( props.getProperty("tv.floe.canova.input.path") );
 
-		System.out.println( "app.input.path = " + splitPath );
+		System.out.println( "input.path = " + splitPath );
 		
 		// TODO: work on this, splits are generating for everything in dir
 		this.splits = computeSplits(splitPath, job);
@@ -239,7 +239,8 @@ public class SerialExecDriver {
 				boolean gotKey = rr.next( key, val );
 				
 				// feed it to the map task harness w the vector engine
-				
+				// TODO: fix the reporter and collector
+				vector_engine.map(key, val, null, null);
 				System.out.println( "line: " + val.toString() ); 
 				
 			}
