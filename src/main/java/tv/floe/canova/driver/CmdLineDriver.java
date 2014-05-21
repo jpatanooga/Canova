@@ -18,12 +18,11 @@ import org.apache.hadoop.util.ToolRunner;
 //import tv.floe.metronome.deeplearning.dbn.model.evaluation.ModelTester;
 //import tv.floe.metronome.deeplearning.dbn.model.evaluation.YarnCmdLineModelTester;
 
-import com.cloudera.iterativereduce.ConfigFields;
 
 public class CmdLineDriver extends Configured implements Tool {
 
-	private static final Log LOG = LogFactory.getLog(YarnCmdLineModelTester.class);
-
+	private static final Log LOG = LogFactory.getLog(CmdLineDriver.class);
+/*
 	@Override
 	public int run(String[] args) throws Exception {
 
@@ -88,6 +87,7 @@ public class CmdLineDriver extends Configured implements Tool {
 
 
 	}
+	*/
 
 	public static void main(String[] args) throws Exception {
 		int rc = ToolRunner.run(new Configuration(), new CmdLineDriver(), args);
@@ -96,4 +96,9 @@ public class CmdLineDriver extends Configured implements Tool {
 		LOG.debug("Calling System.exit(" + rc + ")");
 		System.exit(rc);
 	}
+@Override
+public int run(String[] arg0) throws Exception {
+	// TODO Auto-generated method stub
+	return 0;
+}
 }
