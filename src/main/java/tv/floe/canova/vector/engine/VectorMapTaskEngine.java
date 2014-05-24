@@ -1,7 +1,10 @@
 package tv.floe.canova.vector.engine;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
+import org.apache.hadoop.mapred.InputFormat;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapred.MapReduceBase;
 import org.apache.hadoop.mapred.Mapper;
@@ -9,10 +12,75 @@ import org.apache.hadoop.mapred.OutputCollector;
 import org.apache.hadoop.mapred.Reporter;
 import org.apache.mahout.math.Vector;
 
+import tv.floe.canova.vector.factory.VectoryFactory;
+
+/**
+ * TODO
+ * - how are we going to instantiate the VectoryFactory instance
+ * 		how are we feeding in the properties file to the JobConf
+ * 
+ * @author josh
+ *
+ * @param <K1>
+ * @param <V1>
+ * @param <K2>
+ * @param <V2>
+ */
 public class VectorMapTaskEngine<K1, V1, K2, V2> extends MapReduceBase
 		implements Mapper<K1, V1, K2, V2> {
 
+	private String inputVectorFactoryClassname = "";
+	private VectoryFactory inputVectoryFactory = null;
+
+	private String outputVectorFactoryClassname = "";
+	private VectoryFactory outputVectoryFactory = null;
 	
+	
+	private Vector vec_in = null;
+	private Vector vec_out = null;
+	
+	private void setupConfiguredClasses() {
+		
+		// setup the vector factory
+		
+		Class<?> inputVecFactory_clazz;
+		try {
+			inputVecFactory_clazz = Class.forName( this.inputVectorFactoryClassname );
+					//props.getProperty("tv.floe.canova.input.format"));
+			
+			Constructor<?> inputFormat_ctor = inputVecFactory_clazz.getConstructor();
+			
+			this.inputVectoryFactory =  (VectoryFactory) inputFormat_ctor.newInstance(); // new
+																	// Object[]
+																	// {
+																	// ctorArgument
+																	// });
+
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		
+		
+	}
 	
 	/**
 	 * Allows us to setup some state for things like word counts
@@ -22,7 +90,10 @@ public class VectorMapTaskEngine<K1, V1, K2, V2> extends MapReduceBase
 	public void configure(JobConf conf) {
 		// this.configuration = conf;
 
-		// Basic pojo code here
+		// TODO: parse the vectory factory classname
+		this.inputVectorFactoryClassname = "";
+		
+		this.outputVectorFactoryClassname = "";
 
 	}
 
@@ -47,17 +118,26 @@ public class VectorMapTaskEngine<K1, V1, K2, V2> extends MapReduceBase
 	 * @param key
 	 * @param value
 	 */
-	public void convert(K1 key, V1 value, Vector vec_input, Vector vec_output) {
-
-		// TODO: convert <K1, V1> from raw data into vectors in/out
-
-	}
 
 	@Override
-	public void map(K1 key_in, V1 value_in,
-			OutputCollector<K2, V2> outputCollector, Reporter reporter)
+	public void map(K1 key_in, V1 value_in, OutputCollector<K2, V2> outputCollector, Reporter reporter)
 			throws IOException {
-		// TODO Auto-generated method stub
+
+		// 1. we want to convert from the incoming format to an intermediate vector representation
+		this.inputVectoryFactory.textToVector( null , this.vec_in, this.vec_out );
+		
+		// we now have vectors
+		
+		// 2. now that we have vectors, we need to figure out where we're going
+		// if the output value has a Text value then
+		this.outputVectoryFactory.vectorToText(this.vec_in, this.vec_out, null);
+		
+		// if the output value is binary then
+		//this.outputVectoryFactory
+		
+		// now write the K2/V2 into the output
+		outputCollector.collect( null, null );
+		
 
 	}
 
