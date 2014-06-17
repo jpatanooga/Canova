@@ -6,16 +6,21 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapred.FileInputFormat;
 import org.apache.hadoop.mapred.InputFormat;
 import org.apache.hadoop.mapred.InputSplit;
 import org.apache.hadoop.mapred.JobConf;
+import org.apache.hadoop.mapred.OutputCollector;
 import org.apache.hadoop.mapred.RecordReader;
 import org.apache.hadoop.mapred.Reporter;
 import org.apache.hadoop.mapred.TextInputFormat;
@@ -49,9 +54,18 @@ public class SerialExecDriver {
 	String inputFormatClassname = "org.apache.hadoop.mapred.TextInputFormat"; //"tv.floe.canova.input.format";
 	InputFormat inputFormat = null;
 	
+	SerialExecOutputCollector collector = null;
+	
 	public SerialExecDriver( String propsFile ) {
 		
 		this.app_properties_file = propsFile;
+		this.collector = new SerialExecOutputCollector();
+		
+	}
+	
+	public OutputCollector getCollector() {
+		
+		return (OutputCollector) this.collector;
 		
 	}
 	
@@ -104,6 +118,21 @@ public class SerialExecDriver {
 		return null;
 		
 	}
+	
+
+	  public static void mergeConfigs(Properties sourceConf, Configuration destConf) {
+	    if (sourceConf == null || destConf == null) {
+	    	System.out.println( "Merge > Null " );
+	      return;
+	    }
+	    
+	    for(Entry<Object, Object> entry : sourceConf.entrySet()) {
+	    //	System.out.println( "Merge > " + entry.getKey().toString() + " == " + entry.getValue().toString() );
+	      if (destConf.get(entry.getKey().toString()) == null) {
+	        destConf.set(entry.getKey().toString(), entry.getValue().toString());
+	      }
+	    }
+	  }	
 
 	/**
 	 * Setup components of the IR app run 1. load app.properties 2. msg arrays
@@ -132,12 +161,17 @@ public class SerialExecDriver {
 			System.out.println(ex);
 		}
 		
+//	      for (Map.Entry<Object, Object> entry : props.entrySet()) {
+//	          System.out.println(entry.getKey() + "=" + entry.getValue());
+//	        }
+		
+		
 		// get input format class
 		
 		Class<?> inputFormat_clazz;
 		try {
 			inputFormat_clazz = Class.forName(props
-					.getProperty("tv.floe.canova.input.format"));
+					.getProperty("tv.floe.canova.input.data.format"));
 			
 			Constructor<?> inputFormat_ctor = inputFormat_clazz.getConstructor();
 			
@@ -181,7 +215,7 @@ public class SerialExecDriver {
 		JobConf job = new JobConf(defaultConf);
 		
 		// app.input.path
-		
+		mergeConfigs( props, defaultConf );
 		
 		
 		Path splitPath = new Path( props.getProperty("tv.floe.canova.input.path") );
@@ -216,11 +250,22 @@ public class SerialExecDriver {
 	public static void run() throws IOException {
 		
 		SerialExecDriver driver = new SerialExecDriver( "src/test/resources/single_process.unit_test.properties" );
-		VectorMapTaskEngine vector_engine = new VectorMapTaskEngine();
-		
 		// read props
-		// compute splist
+		// compute split
 		driver.setup();
+
+		System.out.println( "vec eng: " + defaultConf.get("tv.floe.canova.vectorization.engine") );
+		
+		Text tmp_text = new Text();
+		
+		VectorMapTaskEngine<LongWritable, Text, NullWritable, Text> vector_engine = new VectorMapTaskEngine<LongWritable, Text, NullWritable, Text>( tmp_text );
+		vector_engine.configure( defaultConf );
+		
+		if (vector_engine.isBadConf()) {
+			System.out.println( "Invalid Conf!" );
+			return;
+		}
+		
 		
 		// setup MapTask->Vectorizer engine
 		
@@ -238,10 +283,12 @@ public class SerialExecDriver {
 				// get the next k/v pair
 				boolean gotKey = rr.next( key, val );
 				
+				System.out.println( "SerialExecDriver > " + val.toString() );
+				
 				// feed it to the map task harness w the vector engine
 				// TODO: fix the reporter and collector
-				vector_engine.map(key, val, null, null);
-				System.out.println( "line: " + val.toString() ); 
+				vector_engine.map(key, val, driver.getCollector(), driver.voidReporter );
+			//	System.out.println( "line: " + val.toString() ); 
 				
 			}
 			

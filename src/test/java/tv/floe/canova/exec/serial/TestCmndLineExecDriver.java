@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 
 public class TestCmndLineExecDriver extends TestCase {
 
-	@Test
+//	@Test
 	public void runBaseTest() {
 		
 		
