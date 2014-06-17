@@ -7,7 +7,18 @@ A tool focused simply on vectorizing raw data into usable vector formats across 
 
 # Example
 
-Convert the MNIST dataset from raw binary files to the svmLight text format.
+ * Convert the MNIST dataset from raw binary files to the svmLight text format.
+ * Convert raw text into the Metronome vector format
+ * Convert raw text into TF-IDF based vectors in a text vector format {svmLight, metronome, arff}
+ * Convert raw text into the word2vec in a text vector format {svmLight, metronome, arff}
+
+# Targeted Vectorization Engines
+
+ * MNIST to vectors
+ * Text to vectors
+    * TF-IDF
+    * Bag of Words
+    * word2vec
 
 # Execution
 
