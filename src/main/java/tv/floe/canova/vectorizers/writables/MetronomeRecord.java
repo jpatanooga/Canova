@@ -5,6 +5,7 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 import org.apache.hadoop.io.Text;
+import org.apache.mahout.math.Vector;
 
 /**
  * Should be able to take a (Mahout / JBLAS) math vector and do Serde on it for
@@ -49,7 +50,7 @@ public class MetronomeRecord extends Text {
 	}
 */
 	public MetronomeRecord() {
-		this(0.0f, 0.0f, 0.0f);
+	//	this(0.0f, 0.0f, 0.0f);
 	}
 
 	// need these two methods for moving data around 
