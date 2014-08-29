@@ -3,7 +3,7 @@ Canova
 
 # Description
 
-A tool focused simply on vectorizing raw data into usable vector formats across machine learning tools
+A tool focused simply on vectorizing raw data into usable vector formats across machine learning tools.
 
 # Example
 
