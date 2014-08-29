@@ -31,4 +31,14 @@ public class JPEGVectorizer<Text> extends Vectorizer<Text> {
 		//output.set(0, 2.0);
 		
 	}
+
+    @Override
+    public Vector generateDimensionedModelInputVector() {
+        return null;
+    }
+
+    @Override
+    public Vector generateDimensionedModelOutputVector() {
+        return null;
+    }
 }

@@ -1,9 +1,7 @@
 package tv.floe.canova.data.vectorizer.text;
 
 import org.apache.mahout.math.Vector;
-
 import tv.floe.canova.data.vectorizer.Vectorizer;
-import tv.floe.canova.vector.format.VectorFormat;
 
 public class TF_IDF_Vectorizer<Text> extends Vectorizer<Text> {
 
@@ -22,5 +20,15 @@ public class TF_IDF_Vectorizer<Text> extends Vectorizer<Text> {
 		output.set(0, 2.0);
 		
 	}
+
+    @Override
+    public Vector generateDimensionedModelInputVector() {
+        return null;
+    }
+
+    @Override
+    public Vector generateDimensionedModelOutputVector() {
+        return null;
+    }
 
 }
