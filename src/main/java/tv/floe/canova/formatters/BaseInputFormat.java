@@ -17,7 +17,7 @@ public abstract class BaseInputFormat<T> implements IInputFormat<T> {
      * @throws IOException
      */
     @Override
-    public abstract T read(InputStream is) throws IOException;
+    public abstract T read(InputStream is,String delim) throws IOException;
 
     /**
      *
@@ -26,7 +26,7 @@ public abstract class BaseInputFormat<T> implements IInputFormat<T> {
      * @throws IOException
      */
     @Override
-    public abstract T read(String is) throws IOException;
+    public abstract T read(String is, String delim) throws IOException;
 
     /**
      *
@@ -35,7 +35,7 @@ public abstract class BaseInputFormat<T> implements IInputFormat<T> {
      * @throws IOException
      */
     @Override
-    public abstract T read(File file) throws IOException;
+    public abstract T read(File file, String delim) throws IOException;
 
     /**
      *

@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class StringGridInputFormat extends BaseInputFormat<ArrayList<List<String>>> {
 
+    @Override
     public ArrayList<List<String>> read(InputStream is, String delim) throws IOException {
         ArrayList<List<String>> ourList = new ArrayList<List<String>>();
 
@@ -37,21 +38,31 @@ public class StringGridInputFormat extends BaseInputFormat<ArrayList<List<String
 
     }
 
-    @Override
     public ArrayList<List<String>> read(InputStream is) throws IOException {
         return read(is, new String(","));
     }
 
     @Override
+    public ArrayList<List<String>> read(String is, String delim) throws IOException {
+        InputStream stream = new ByteArrayInputStream(is.getBytes(StandardCharsets.UTF_8));
+        return read(stream, delim);
+    }
+
     public ArrayList<List<String>> read(String is) throws IOException {
-        ArrayList<List<String>> ourList = new ArrayList<List<String>>();
 
         InputStream stream = new ByteArrayInputStream(is.getBytes(StandardCharsets.UTF_8));
-        return read(stream);
+        return read(stream, new String(","));
     }
 
     @Override
+    public ArrayList<List<String>> read(File file, String delim) throws IOException {
+        InputStream stream = new FileInputStream(file);
+        return read(stream, delim);
+    }
+
     public ArrayList<List<String>> read(File file) throws IOException {
-        return null;
+
+        InputStream stream = new FileInputStream(file);
+        return read(stream, new String(","));
     }
 }
