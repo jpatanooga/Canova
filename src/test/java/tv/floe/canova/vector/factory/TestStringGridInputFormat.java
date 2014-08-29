@@ -6,6 +6,7 @@ import tv.floe.canova.formatters.StringGridInputFormat;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -23,6 +24,14 @@ public class TestStringGridInputFormat extends TestCase {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-        System.out.print(a.toString());
+        List<String> l1 = Arrays.asList("a", "b", "c");
+        List<String> l2 = Arrays.asList("d", "e", "f");
+
+        ArrayList<List<String>> pos = new ArrayList<List<String>>();
+        pos.add(l1);
+        pos.add(l2);
+        assertEquals(pos,a);
+
+        
     }
 }
