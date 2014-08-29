@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: me.prettyprint:hector-core:0.8.0-2">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/me/prettyprint/hector-core/0.8.0-2/hector-core-0.8.0-2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/me/prettyprint/hector-core/0.8.0-2/hector-core-0.8.0-2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/me/prettyprint/hector-core/0.8.0-2/hector-core-0.8.0-2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
