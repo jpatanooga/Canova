@@ -3,10 +3,9 @@ package tv.floe.canova.vector.factory;
 import junit.framework.TestCase;
 import tv.floe.canova.formatters.StringGridOutputFormat;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,15 +35,19 @@ public class TestStringGridOutputFormat extends TestCase {
             e1.printStackTrace();
         }
         try {
-            Process p = Runtime.getRuntime().exec(new String("/usr/bin/md5sum ") + f.getCanonicalPath());
-            Process p1 = Runtime.getRuntime().exec(new String("/usr/bin/md5sum ") + ft.getCanonicalPath());
-            BufferedReader stdInput = new BufferedReader(new
-                    InputStreamReader(p.getInputStream()));
-            BufferedReader stdInput1 = new BufferedReader(new
-                    InputStreamReader(p1.getInputStream()));
-            assertEquals(stdInput.readLine().split(" ")[0], stdInput1.readLine().split(" ")[0]);
+
+            byte[] frb = Files.readAllBytes(Paths.get(f.getCanonicalPath()));
+            byte[] frbt = Files.readAllBytes(Paths.get(ft.getCanonicalPath()));
+
+            assertEquals(Arrays.toString(frb), Arrays.toString(frbt));
+
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+
     }
+
+
 }

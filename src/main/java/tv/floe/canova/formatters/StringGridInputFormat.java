@@ -1,14 +1,6 @@
 package tv.floe.canova.formatters;
 
-import org.apache.commons.io.IOUtils;
-
-import java.io.InputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.File;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,19 +10,23 @@ import java.util.List;
  */
 public class StringGridInputFormat extends BaseInputFormat<List<List<String>>> {
 
+    /**
+     * Reads from an input stream line by line delimited by delim and returns a list of list of strings
+     * @param is
+     * @param delim
+     * @return
+     * @throws IOException
+     */
     @Override
     public List<List<String>> read(InputStream is, String delim) throws IOException {
         List<List<String>> ourList = new ArrayList<List<String>>();
 
-
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        List<String> l = IOUtils.readLines(reader);
-
-        for (String str : l) {
+        String l;
+        while ( (l = reader.readLine()) != null ) {
             List<String> data = new ArrayList<String>();
 
-            String[] tokens = this.stringSplit(str, delim);
+            String[] tokens = this.stringSplit(l, delim);
             float thisRow[] = new float[tokens.length];
             for (String ri: tokens) {
                 data.add(ri);
@@ -42,31 +38,72 @@ public class StringGridInputFormat extends BaseInputFormat<List<List<String>>> {
 
     }
 
+    /**
+     * Reads from an input stream line by line delimited by a comma and returns a list of list of strings
+     * @param is
+     * @return
+     * @throws IOException
+     */
     public List<List<String>> read(InputStream is) throws IOException {
         return read(is, new String(","));
     }
 
+    /**
+     * Reads from a string line by line delimited by delim and returns a list of list of strings
+     * @param is
+     * @param delim
+     * @return
+     * @throws IOException
+     */
     @Override
     public List<List<String>> read(String is, String delim) throws IOException {
         InputStream stream = new ByteArrayInputStream(is.getBytes(StandardCharsets.UTF_8));
-        return read(stream, delim);
+        List<List<String>> ret = read(stream, delim);
+        stream.close();
+        return ret;
     }
 
+    /**
+     * Reads from a string line by line delimited by a comma and returns a list of list of strings
+     * @param is
+     * @return
+     * @throws IOException
+     */
     public List<List<String>> read(String is) throws IOException {
 
         InputStream stream = new ByteArrayInputStream(is.getBytes(StandardCharsets.UTF_8));
-        return read(stream, new String(","));
+
+        List<List<String>> ret = read(stream);
+        stream.close();
+        return ret;
     }
 
+    /**
+     * Reads from a file line by line delimited by delim and returns a list of list of strings
+     * @param file
+     * @param delim
+     * @return
+     * @throws IOException
+     */
     @Override
     public List<List<String>> read(File file, String delim) throws IOException {
         InputStream stream = new FileInputStream(file);
-        return read(stream, delim);
+        List<List<String>> ret = read(stream, delim);
+        stream.close();
+        return ret;
     }
 
+    /**
+     * Reads from a file line by line delimited by a comma and returns a list of list of strings
+     * @param file
+     * @return
+     * @throws IOException
+     */
     public List<List<String>> read(File file) throws IOException {
 
         InputStream stream = new FileInputStream(file);
-        return read(stream, new String(","));
+        List<List<String>> ret = read(stream);
+        stream.close();
+        return ret;
     }
 }

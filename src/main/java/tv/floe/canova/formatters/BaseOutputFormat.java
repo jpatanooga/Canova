@@ -9,7 +9,7 @@ import java.io.OutputStream;
  */
 public abstract class BaseOutputFormat<T> implements IOutputFormat<T> {
     /**
-     *
+     * 
      * @param t
      * @param file
      * @throws IOException
@@ -19,10 +19,9 @@ public abstract class BaseOutputFormat<T> implements IOutputFormat<T> {
     /**
      *
      * @param t
-     * @param str
      * @throws IOException
      */
-    public abstract String write(T t, String str) throws IOException;
+    public abstract String write(T t) throws IOException;
 
     /**
      *

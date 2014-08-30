@@ -3,7 +3,7 @@ package tv.floe.canova.data.vectorizer.text;
 import org.apache.mahout.math.Vector;
 import tv.floe.canova.data.vectorizer.Vectorizer;
 
-public class TF_IDF_Vectorizer<Text> extends Vectorizer<Text> {
+public class tfIdfVectorizer<Text> extends Vectorizer<Text> {
 
 	/**
 	 *
@@ -14,7 +14,7 @@ public class TF_IDF_Vectorizer<Text> extends Vectorizer<Text> {
 	public void vectorize(Text rec, Vector input, Vector output) {
 		// TODO Auto-generated method stub
 		
-		System.out.println( "TF_IDF_Vectorizer > " + rec.toString() );
+		System.out.println( "tfIdfVectorizer > " + rec.toString() );
 		
 		input.set(0, 1.0);
 		output.set(0, 2.0);

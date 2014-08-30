@@ -1,6 +1,7 @@
 pom.xml.releaseBackup 
 target/
 *.ser
+*.iml
 application.home_IS_UNDEFINEiD
 README.md~
 *.jpg

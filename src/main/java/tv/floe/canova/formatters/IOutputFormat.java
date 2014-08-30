@@ -10,6 +10,7 @@ import java.io.OutputStream;
 public interface IOutputFormat<T> {
 
     /**
+     * Writes object to File pointer
      *
      * @param t
      * @param file
@@ -18,14 +19,15 @@ public interface IOutputFormat<T> {
     public void write(T t, File file) throws IOException;
 
     /**
+     * Write object to String and returns it.
      *
      * @param t
-     * @param str
      * @throws IOException
      */
-    public String write(T t, String str) throws IOException;
+    public String write(T t) throws IOException;
 
     /**
+     * Write object to OutputStream
      *
      * @param t
      * @param os
