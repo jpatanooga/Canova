@@ -22,7 +22,7 @@ public abstract class BaseOutputFormat<T> implements IOutputFormat<T> {
      * @param str
      * @throws IOException
      */
-    public abstract void write(T t, String str) throws IOException;
+    public abstract String write(T t, String str) throws IOException;
 
     /**
      *

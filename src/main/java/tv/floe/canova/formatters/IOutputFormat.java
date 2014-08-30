@@ -23,7 +23,7 @@ public interface IOutputFormat<T> {
      * @param str
      * @throws IOException
      */
-    public void write(T t, String str) throws IOException;
+    public String write(T t, String str) throws IOException;
 
     /**
      *

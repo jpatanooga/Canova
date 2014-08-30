@@ -23,12 +23,11 @@ public class TestStringGridInputFormat extends TestCase {
         pos.add(l2);
         return pos;
     }
-
     @Test
-    public void TestStringGridFile() {
+    public void testConvertVectorFile() {
         StringGridInputFormat e = new StringGridInputFormat();
         File f = new File("src/test/java/tv/floe/canova/vector/factory/TestStringGridInputFormat.txt");
-        ArrayList<List<String>> a = new ArrayList<List<String>>();
+        List<List<String>> a = new ArrayList<List<String>>();
 
         try {
             a = e.read(f);
@@ -42,10 +41,10 @@ public class TestStringGridInputFormat extends TestCase {
 
     }
     @Test
-    public void TestStringGridString() {
+    public void testConvertVectorString() {
         StringGridInputFormat e = new StringGridInputFormat();
         String s = new String("a,b,c\nd,e,f");
-        ArrayList<List<String>> a = new ArrayList<List<String>>();
+        List<List<String>> a = new ArrayList<List<String>>();
 
         try {
             a = e.read(s);
