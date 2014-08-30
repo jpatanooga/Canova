@@ -9,7 +9,7 @@ import java.io.OutputStream;
  */
 public abstract class BaseOutputFormat<T> implements IOutputFormat<T> {
     /**
-     * 
+     *
      * @param t
      * @param file
      * @throws IOException
