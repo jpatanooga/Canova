@@ -1,14 +1,16 @@
 package tv.floe.canova.formatters;
 
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+
 /**
  * Created by mjk on 8/28/14.
  */
 
-public abstract class BaseInputFormat<T> implements IInputFormat<T> {
+public abstract class BaseInputFormat<T> implements IInputFormat<T>, Serializable {
+    protected static final String COMMA = new String(",");
+
 
     /**
      *
@@ -56,4 +58,30 @@ public abstract class BaseInputFormat<T> implements IInputFormat<T> {
         String[] tokens = ins.split(delim);
         return tokens;
     }
+
+    protected T read_obj(String is, String delim) throws IOException {
+        InputStream stream = new ByteArrayInputStream(is.getBytes(StandardCharsets.UTF_8));
+        T ret = read(stream, delim);
+        stream.close();
+        return ret;
+    }
+
+    public T read_obj(InputStream is, String delim) throws IOException {
+        ObjectInputStream objin = new ObjectInputStream(is);
+        T cv = null;
+        try {
+            cv = (T) objin.readObject();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return cv;
+    }
+
+    public T read_obj(File file, String delim) throws IOException {
+        FileInputStream fs = new FileInputStream(file);
+        T cv = read(fs, delim);
+        fs.close();
+        return cv;
+    }
+
 }

@@ -57,7 +57,11 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-    
+    <dependency>
+        <groupId>org.deeplearning4j</groupId>
+        <artifactId>deeplearning4j-scaleout-akka-word2vec</artifactId>
+        <version>0.0.3.2-SNAPSHOT</version>
+    </dependency>
 
 		<dependency>
 			<groupId>org.apache.hadoop</groupId>
@@ -210,9 +214,26 @@
           </exclusion>
 				
 			</exclusions>
-		</dependency>		    
-    
-  </dependencies>
+		</dependency>
+    <dependency>
+        <groupId>org.deeplearning4j</groupId>
+        <artifactId>deeplearning4j-core</artifactId>
+        <version>0.0.3.2-SNAPSHOT</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <artifactId>linear-algebra-jblas</artifactId>
+        <groupId>org.deeplearning4j</groupId>
+        <version>0.0.3.2-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+        <groupId>org.deeplearning4j</groupId>
+        <artifactId>deeplearning4j-core</artifactId>
+        <version>0.0.3.2-SNAPSHOT</version>
+    </dependency>
+
+
+</dependencies>
   
   
   
