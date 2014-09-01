@@ -13,7 +13,7 @@ public class DocumentMatrixInputFormat extends BaseInputFormat<DocumentMatrix> {
     @Override
     public DocumentMatrix read(InputStream is, String delim) throws IOException {
         DocumentMatrix cv = null;
-        cv = read_obj(is, delim);
+        cv = readObj(is, delim);
         return cv;
     }
     public DocumentMatrix read(InputStream is) throws IOException {
@@ -22,7 +22,7 @@ public class DocumentMatrixInputFormat extends BaseInputFormat<DocumentMatrix> {
 
     @Override
     public DocumentMatrix read(String is, String delim) throws IOException {
-        DocumentMatrix ret = read_obj(is,delim);
+        DocumentMatrix ret = readObj(is, delim);
         return ret;
     }
     public DocumentMatrix read(String is) throws IOException {
@@ -32,7 +32,7 @@ public class DocumentMatrixInputFormat extends BaseInputFormat<DocumentMatrix> {
 
     @Override
     public DocumentMatrix read(File file, String delim) throws IOException {
-        DocumentMatrix ret = read_obj(file,delim);
+        DocumentMatrix ret = readObj(file, delim);
         return ret;
     }
     public DocumentMatrix read(File file) throws IOException {

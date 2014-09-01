@@ -22,7 +22,7 @@ public class CountVectorizerInputFormat extends BaseInputFormat<CountVectorizer>
      */
     @Override
     public CountVectorizer read(InputStream is, String delim) throws IOException {
-        CountVectorizer cv = read_obj(is, delim);
+        CountVectorizer cv = readObj(is, delim);
         return cv;
     }
 
@@ -45,7 +45,7 @@ public class CountVectorizerInputFormat extends BaseInputFormat<CountVectorizer>
      */
     @Override
     public CountVectorizer read(String is, String delim) throws IOException {
-        CountVectorizer ret = read_obj(is,delim);
+        CountVectorizer ret = readObj(is, delim);
         return ret;
     }
 
@@ -68,7 +68,7 @@ public class CountVectorizerInputFormat extends BaseInputFormat<CountVectorizer>
      */
     @Override
     public CountVectorizer read(File file, String delim) throws IOException {
-        CountVectorizer cv = read_obj(file, delim);
+        CountVectorizer cv = readObj(file, delim);
         return cv;
     }
 

@@ -12,16 +12,16 @@ import java.io.OutputStream;
 public class DocumentMatrixOutputFormat extends BaseOutputFormat<DocumentMatrix>  {
     @Override
     public void write(DocumentMatrix documentMatrix, File file) throws IOException {
-        write_obj(documentMatrix, file);
+        writeObj(documentMatrix, file);
     }
 
     @Override
     public String write(DocumentMatrix documentMatrix) throws IOException {
-        return write_obj(documentMatrix);
+        return writeObj(documentMatrix);
     }
 
     @Override
     public void write(DocumentMatrix documentMatrix, OutputStream os) throws IOException {
-        write_obj(documentMatrix, os);
+        writeObj(documentMatrix, os);
     }
 }

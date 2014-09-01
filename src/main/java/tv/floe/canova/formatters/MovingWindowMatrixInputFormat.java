@@ -12,7 +12,7 @@ import java.io.InputStream;
 public class MovingWindowMatrixInputFormat extends BaseInputFormat<MovingWindowMatrix> {
     @Override
     public MovingWindowMatrix read(InputStream is, String delim) throws IOException {
-        return read_obj(is, delim);
+        return readObj(is, delim);
     }
 
     public MovingWindowMatrix read(InputStream is) throws IOException {
@@ -21,7 +21,7 @@ public class MovingWindowMatrixInputFormat extends BaseInputFormat<MovingWindowM
 
     @Override
     public MovingWindowMatrix read(String is, String delim) throws IOException {
-        return read_obj(is, delim);
+        return readObj(is, delim);
     }
 
     public MovingWindowMatrix read(String is) throws IOException {

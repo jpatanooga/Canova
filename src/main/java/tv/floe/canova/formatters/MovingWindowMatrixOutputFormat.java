@@ -12,16 +12,16 @@ import java.io.OutputStream;
 public class MovingWindowMatrixOutputFormat extends BaseOutputFormat<MovingWindowMatrix> {
     @Override
     public void write(MovingWindowMatrix movingWindowMatrix, File file) throws IOException {
-        write_obj(movingWindowMatrix, file);
+        writeObj(movingWindowMatrix, file);
     }
 
     @Override
     public String write(MovingWindowMatrix movingWindowMatrix) throws IOException {
-        return write_obj(movingWindowMatrix);
+        return writeObj(movingWindowMatrix);
     }
 
     @Override
     public void write(MovingWindowMatrix movingWindowMatrix, OutputStream os) throws IOException {
-        write_obj(movingWindowMatrix, os);
+        writeObj(movingWindowMatrix, os);
     }
 }

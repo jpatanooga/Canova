@@ -12,7 +12,7 @@ import java.io.InputStream;
 public class NDArrayInputFormat extends BaseInputFormat<NDArray> {
     @Override
     public NDArray read(InputStream is, String delim) throws IOException {
-        return read_obj(is, delim);
+        return readObj(is, delim);
     }
     public NDArray read(InputStream is) throws IOException {
         return read(is, COMMA);
@@ -20,14 +20,14 @@ public class NDArrayInputFormat extends BaseInputFormat<NDArray> {
 
     @Override
     public NDArray read(String is, String delim) throws IOException {
-        return read_obj(is, delim);
+        return readObj(is, delim);
     }
     public NDArray read(String is) throws IOException {
         return read(is, COMMA);
     }
     @Override
     public NDArray read(File file, String delim) throws IOException {
-        return read_obj(file, delim);
+        return readObj(file, delim);
     }
     public NDArray read(File file) throws IOException {
         return read(file, COMMA);

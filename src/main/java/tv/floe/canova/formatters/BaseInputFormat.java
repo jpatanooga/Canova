@@ -58,7 +58,14 @@ public abstract class BaseInputFormat<T> implements IInputFormat<T>, Serializabl
         return tokens;
     }
 
-    protected T read_obj(String is, String delim) throws IOException {
+    /**
+     * Read/deserialize and object from a String object
+     * @param is
+     * @param delim
+     * @return
+     * @throws IOException
+     */
+    protected T readObj(String is, String delim) throws IOException {
         byte[] bytes = org.apache.commons.codec.binary.Base64.decodeBase64(is);
 
         ByteArrayInputStream stream = new ByteArrayInputStream(bytes);
@@ -67,7 +74,14 @@ public abstract class BaseInputFormat<T> implements IInputFormat<T>, Serializabl
         return ret;
     }
 
-    public T read_obj(InputStream is, String delim) throws IOException {
+    /**
+     * Read/deserialize and object from an input stream
+     * @param is
+     * @param delim
+     * @return
+     * @throws IOException
+     */
+    public T readObj(InputStream is, String delim) throws IOException {
         ObjectInputStream objin = new ObjectInputStream(is);
         T cv = null;
         try {
@@ -78,7 +92,14 @@ public abstract class BaseInputFormat<T> implements IInputFormat<T>, Serializabl
         return cv;
     }
 
-    public T read_obj(File file, String delim) throws IOException {
+    /**
+     * Read/deserialize and object from a File object
+     * @param file
+     * @param delim
+     * @return
+     * @throws IOException
+     */
+    public T readObj(File file, String delim) throws IOException {
         FileInputStream fs = new FileInputStream(file);
         T cv = read(fs, delim);
         fs.close();

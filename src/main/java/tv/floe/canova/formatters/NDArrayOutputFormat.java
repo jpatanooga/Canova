@@ -12,16 +12,16 @@ import java.io.OutputStream;
 public class NDArrayOutputFormat extends BaseOutputFormat<NDArray> {
     @Override
     public void write(NDArray ndArray, File file) throws IOException {
-         write_obj(ndArray, file);
+         writeObj(ndArray, file);
     }
 
     @Override
     public String write(NDArray ndArray) throws IOException {
-        return write_obj(ndArray);
+        return writeObj(ndArray);
     }
 
     @Override
     public void write(NDArray ndArray, OutputStream os) throws IOException {
-         write_obj(ndArray, os);
+         writeObj(ndArray, os);
     }
 }

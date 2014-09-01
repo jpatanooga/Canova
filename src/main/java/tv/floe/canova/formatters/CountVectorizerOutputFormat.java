@@ -17,7 +17,7 @@ public class CountVectorizerOutputFormat extends BaseOutputFormat<CountVectorize
      */
     @Override
     public void write(CountVectorizer countVectorizer, File file) throws IOException {
-        write_obj(countVectorizer, file);
+        writeObj(countVectorizer, file);
     }
 
     /**
@@ -28,7 +28,7 @@ public class CountVectorizerOutputFormat extends BaseOutputFormat<CountVectorize
      */
     @Override
     public String write(CountVectorizer countVectorizer) throws IOException {
-        return write_obj(countVectorizer);
+        return writeObj(countVectorizer);
     }
 
     /**
@@ -39,6 +39,6 @@ public class CountVectorizerOutputFormat extends BaseOutputFormat<CountVectorize
      */
     @Override
     public void write(CountVectorizer countVectorizer, OutputStream os) throws IOException {
-        write_obj(countVectorizer, os);
+        writeObj(countVectorizer, os);
     }
 }

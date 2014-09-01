@@ -6,6 +6,7 @@ import java.io.*;
  * Created by mjk on 8/29/14.
  */
 public abstract class BaseOutputFormat<T> implements IOutputFormat<T> {
+
     /**
      * @param t
      * @param file
@@ -26,19 +27,39 @@ public abstract class BaseOutputFormat<T> implements IOutputFormat<T> {
      */
     public abstract void write(T t, OutputStream os) throws IOException;
 
-    public void write_obj(T countVectorizer, OutputStream os) throws IOException {
+    /**
+     * Write/serialize a generic object to an output stream
+     * @param countVectorizer
+     * @param os
+     * @throws IOException
+     */
+    public void writeObj(T countVectorizer, OutputStream os) throws IOException {
         ObjectOutputStream oos = new ObjectOutputStream(os);
         oos.writeObject(countVectorizer);
         oos.close();
     }
-    public String write_obj(T countVectorizer) throws IOException {
+
+    /**
+     * Write/Serialize a generic object to a string and return it
+     * @param countVectorizer
+     * @return
+     * @throws IOException
+     */
+    public String writeObj(T countVectorizer) throws IOException {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         write(countVectorizer, os);
         os.close();
         String imgString = org.apache.commons.codec.binary.Base64.encodeBase64String(os.toByteArray());
         return imgString;
     }
-    public void write_obj(T countVectorizer, File file) throws IOException {
+
+    /**
+     * Write/serialize and object to the file object given
+     * @param countVectorizer
+     * @param file
+     * @throws IOException
+     */
+    public void writeObj(T countVectorizer, File file) throws IOException {
         FileOutputStream ofs = new FileOutputStream(file);
         write(countVectorizer, ofs);
         ofs.close();
