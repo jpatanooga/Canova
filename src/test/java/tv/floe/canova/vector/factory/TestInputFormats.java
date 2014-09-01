@@ -2,18 +2,11 @@ package tv.floe.canova.vector.factory;
 
 import junit.framework.TestCase;
 import org.deeplearning4j.linalg.jblas.NDArray;
-import org.deeplearning4j.topicmodeling.CountVectorizer;
-import org.deeplearning4j.util.Index;
-import org.deeplearning4j.word2vec.sentenceiterator.SentenceIterator;
-import org.deeplearning4j.word2vec.sentenceiterator.SentencePreProcessor;
-import org.deeplearning4j.word2vec.tokenizer.Tokenizer;
-import org.deeplearning4j.word2vec.tokenizer.TokenizerFactory;
 import org.junit.Test;
-import tv.floe.canova.formatters.CountVectorizerInputFormat;
-import tv.floe.canova.formatters.CountVectorizerOutputFormat;
 import tv.floe.canova.formatters.NDArrayInputFormat;
 import tv.floe.canova.formatters.NDArrayOutputFormat;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -22,73 +15,54 @@ import java.io.IOException;
 public class TestInputFormats extends TestCase {
 
     @Test
-    public void testCountVectorizer() {
-         SentenceIterator iter = new SentenceIterator() {
-             @Override
-             public String nextSentence() {
-                 return null;
-             }
+    public void testStringFormats() {
 
-             @Override
-             public boolean hasNext() {
-                 return false;
-             }
+        NDArray cv = new NDArray(new float[2], new int[]{1,2});
+        NDArray cv_d = new NDArray(new float[3], new int[]{1,2,3});
 
-             @Override
-             public void reset() {
+        NDArray cv1;
 
-             }
+        NDArrayInputFormat cvi = new NDArrayInputFormat();
+        NDArrayOutputFormat cvo = new NDArrayOutputFormat();
 
-             @Override
-             public void finish() {
-
-             }
-
-             @Override
-             public SentencePreProcessor getPreProcessor() {
-                 return null;
-             }
-
-             @Override
-             public void setPreProcessor(SentencePreProcessor sentencePreProcessor) {
-
-             }
-         };
-         TokenizerFactory tokenizerFactory = new TokenizerFactory() {
-             @Override
-             public Tokenizer create(String s) {
-                 return null;
-             }
-         };
-         Index wordsToCount = new Index();
-
-        if (false) {
-            CountVectorizer cv = new CountVectorizer(iter, tokenizerFactory, wordsToCount);
-            CountVectorizer cv1;
-
-            CountVectorizerInputFormat cvi = new CountVectorizerInputFormat();
-            CountVectorizerOutputFormat cvo = new CountVectorizerOutputFormat();
-
-            String o = new String();
-            try {
-                o = cvo.write(cv);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        String o = new String();
+        try {
+            o = cvo.write(cv);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        if (true) {
-            NDArray cv = new NDArray(new float[2], new int[]{1,2});
-            NDArray cv1;
 
-            NDArrayInputFormat cvi = new NDArrayInputFormat();
-            NDArrayOutputFormat cvo = new NDArrayOutputFormat();
-
-            String o = new String();
-            try {
-                o = cvo.write(cv);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            cv1 = cvi.read(o);
+            assertEquals(cv, cv1);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+    }
+    @Test
+    public void testFileFormats() {
+        NDArray cv = new NDArray(new float[2], new int[]{1,2});
+        NDArray cv_d = new NDArray(new float[3], new int[]{1,2,3});
+
+        NDArray cv1;
+
+        NDArrayInputFormat cvi = new NDArrayInputFormat();
+        NDArrayOutputFormat cvo = new NDArrayOutputFormat();
+
+        File f = new File("./asdf");
+        try {
+            cvo.write(cv,f);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            NDArray cv2;
+            cv2 = cvi.read(f);
+            assertEquals(cv, cv2);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        f.delete();
     }
 }

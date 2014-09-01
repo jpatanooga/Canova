@@ -2,7 +2,6 @@ package tv.floe.canova.formatters;
 
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Created by mjk on 8/28/14.
@@ -60,7 +59,9 @@ public abstract class BaseInputFormat<T> implements IInputFormat<T>, Serializabl
     }
 
     protected T read_obj(String is, String delim) throws IOException {
-        InputStream stream = new ByteArrayInputStream(is.getBytes(StandardCharsets.UTF_8));
+        byte[] bytes = org.apache.commons.codec.binary.Base64.decodeBase64(is);
+
+        ByteArrayInputStream stream = new ByteArrayInputStream(bytes);
         T ret = read(stream, delim);
         stream.close();
         return ret;

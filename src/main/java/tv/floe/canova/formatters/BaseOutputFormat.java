@@ -32,9 +32,11 @@ public abstract class BaseOutputFormat<T> implements IOutputFormat<T> {
         oos.close();
     }
     public String write_obj(T countVectorizer) throws IOException {
-        OutputStream os = new ByteArrayOutputStream();
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
         write(countVectorizer, os);
-        return os.toString();
+        os.close();
+        String imgString = org.apache.commons.codec.binary.Base64.encodeBase64String(os.toByteArray());
+        return imgString;
     }
     public void write_obj(T countVectorizer, File file) throws IOException {
         FileOutputStream ofs = new FileOutputStream(file);
