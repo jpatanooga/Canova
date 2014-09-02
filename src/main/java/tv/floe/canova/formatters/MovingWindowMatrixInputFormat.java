@@ -10,6 +10,7 @@ import java.io.InputStream;
  * Created by mjk on 8/31/14.
  */
 public class MovingWindowMatrixInputFormat extends BaseInputFormat<MovingWindowMatrix> {
+
     @Override
     public MovingWindowMatrix read(InputStream is, String delim) throws IOException {
         return readObj(is, delim);
