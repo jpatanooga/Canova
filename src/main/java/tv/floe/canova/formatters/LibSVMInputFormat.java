@@ -11,10 +11,6 @@ import java.util.concurrent.ConcurrentSkipListMap;
  */
 public abstract class LibSVMInputFormat<T> extends BaseInputFormat<T> {
 
-    private static final String DELIM_NEWLINE  = new String("\n");
-    private static final String DELIM_COLON  = new String(":");
-    private static final String DELIM_BAR  = new String("|");
-    private static final String SPACE  = new String(" ");
 
     @Override
     public abstract T read(InputStream is, String delim) throws IOException;

@@ -64,4 +64,9 @@ public abstract class BaseOutputFormat<T> implements IOutputFormat<T> {
         write(countVectorizer, ofs);
         ofs.close();
     }
+    protected static final String DELIM_NEWLINE  = new String("\n");
+    protected static final String DELIM_COLON  = new String(":");
+    protected static final String DELIM_BAR  = new String("|");
+    protected static final String SPACE  = new String(" ");
+
 }
