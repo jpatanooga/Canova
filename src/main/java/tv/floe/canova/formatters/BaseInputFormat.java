@@ -106,10 +106,10 @@ public abstract class BaseInputFormat<T> implements IInputFormat<T>, Serializabl
         return cv;
     }
 
-    public static final String DELIM_NEWLINE  = new String("\n");
-    public static final String DELIM_COLON  = new String(":");
-    public static final String DELIM_BAR  = new String("|");
-    public static final String SPACE  = new String(" ");
+    protected static final String DELIM_NEWLINE  = new String("\n");
+    protected static final String DELIM_COLON  = new String(":");
+    protected static final String DELIM_BAR  = new String("|");
+    protected static final String SPACE  = new String(" ");
 
 
 }

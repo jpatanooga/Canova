@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Map;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * Created by mjk on 9/1/14.
@@ -26,16 +26,15 @@ public abstract class LibSVMInputFormat<T> extends BaseInputFormat<T> {
      * @return
      * @throws IOException
      */
-    public static Map<Integer,Double> parseRead(InputStream is, String recordDelim, String splitDelim, Map<Integer,Double> ret) throws IOException {
-
+    protected ConcurrentSkipListMap parseRead(InputStream is, String recordDelim, String splitDelim) throws IOException {
+        ConcurrentSkipListMap ret = new ConcurrentSkipListMap();
 
         String l = readLine(recordDelim,is);
 
         String[] parts = l.split(SPACE);
 
         int classIndex = Integer.parseInt(parts[0]);
-        double classIndex_d = (double)classIndex;
-        ret.put(0, classIndex_d);
+        ret.put(0, classIndex);
 
         for (int x = 1; x < parts.length; x++) {
             String[] feature = parts[x].split(splitDelim);
@@ -44,10 +43,9 @@ public abstract class LibSVMInputFormat<T> extends BaseInputFormat<T> {
             ret.put(index,val);
         }
         return ret;
-
     }
-    protected Map<Integer,Double> parseRead(InputStream is, Map<Integer,Double> ret) throws IOException {
-        return parseRead(is,DELIM_NEWLINE, DELIM_COLON, ret);
+    protected ConcurrentSkipListMap parseRead(InputStream is) throws IOException {
+        return parseRead(is,DELIM_NEWLINE, DELIM_COLON);
     }
 
     /**
@@ -57,7 +55,7 @@ public abstract class LibSVMInputFormat<T> extends BaseInputFormat<T> {
      * @return
      * @throws IOException
      */
-    protected static String readLine(String delim, InputStream is) throws IOException {
+    protected String readLine(String delim, InputStream is) throws IOException {
         String ret = new String();
         String everything = new String(".*");
         int c;
@@ -83,8 +81,8 @@ public abstract class LibSVMInputFormat<T> extends BaseInputFormat<T> {
     public T read(File file) throws IOException {
         return read(file, COMMA);
     }
-    protected Map<Integer,Double> fileReader(FileInputStream file, String recordDelim, String splitDelim,Map<Integer,Double> ret) throws IOException {
-        return parseRead(file, recordDelim, splitDelim,ret);
+    protected ConcurrentSkipListMap fileReader(FileInputStream file, String recordDelim, String splitDelim) throws IOException {
+        return parseRead(file, recordDelim, splitDelim);
     }
 
 }
