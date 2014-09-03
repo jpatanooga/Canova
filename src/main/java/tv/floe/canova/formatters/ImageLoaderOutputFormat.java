@@ -35,6 +35,7 @@ public class ImageLoaderOutputFormat extends BaseOutputFormat<BufferedImage> {
     public String write(BufferedImage bufferedImage) throws IOException {
         return write(bufferedImage, DEFAULT_FORMAT);
     }
+
     public String write(BufferedImage bufferedImage, String format) throws IOException {
 
         //ImageIO.write(bufferedImage, format, b);
@@ -42,7 +43,6 @@ public class ImageLoaderOutputFormat extends BaseOutputFormat<BufferedImage> {
         ImageIO.write(bufferedImage, format, Base64.getEncoder().wrap(b));
         return b.toString();
     }
-
 
     @Override
     public void write(BufferedImage bufferedImage, OutputStream os) throws IOException {

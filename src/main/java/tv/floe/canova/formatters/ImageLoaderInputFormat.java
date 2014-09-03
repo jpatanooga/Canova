@@ -24,11 +24,6 @@ public class ImageLoaderInputFormat extends BaseInputFormat<BufferedImage> {
 
     public BufferedImage read(InputStream is, int height, int width) throws IOException {
 
-        /*
-        BufferedImage bi = read(is, COMMA);
-        bi.
-        bi.getScaledInstance(height, width, 0);
-        */
         return read(is, COMMA);
     }
     @Override
