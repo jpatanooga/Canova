@@ -110,6 +110,29 @@ public abstract class BaseInputFormat<T> implements IInputFormat<T>, Serializabl
     public static final String DELIM_COLON  = new String(":");
     public static final String DELIM_BAR  = new String("|");
     public static final String SPACE  = new String(" ");
+    public static final String DELIM_COMMA  = new String(",");
 
+    /**
+     * Read inputstream until delim is encountered; single byte character for now.
+     * @param delim -- a single byte character that demarcates the stream
+     * @param is
+     * @return
+     * @throws IOException
+     */
+    protected static String readLine(String delim, InputStream is) throws IOException {
+        String ret = null;
+        int c;
+        while ( (c = is.read()) != -1 ) {
+            if (ret == null) {
+                ret = new String();
+            }
+            char ch = (char) c;
+            if (ch == (delim.charAt(0))) {
+                break;
+            }
+            ret += new String(String.valueOf(ch));
+        }
+        return ret;
+    }
 
 }

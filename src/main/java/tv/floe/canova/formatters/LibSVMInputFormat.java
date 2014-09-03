@@ -26,14 +26,22 @@ public abstract class LibSVMInputFormat<T> extends BaseInputFormat<T> {
      * @return
      * @throws IOException
      */
-    public static Map<Integer,Double> parseRead(InputStream is, String recordDelim, String splitDelim, Map<Integer,Double> ret) throws IOException {
+    public static Map<Integer,Double> parseRecord(InputStream is, String recordDelim, String splitDelim, Map<Integer,Double> ret) throws IOException {
 
 
-        String l = readLine(recordDelim,is);
+        String l;
+        l = readLine(recordDelim,is);
+        if (l == null) {
+            return ret;
+        }
 
         String[] parts = l.split(SPACE);
-
-        int classIndex = Integer.parseInt(parts[0]);
+        int classIndex = 0;
+        try {
+            classIndex = Integer.parseInt(parts[0]);
+        } catch (NumberFormatException e) {
+            return ret;
+        }
         double classIndex_d = (double)classIndex;
         ret.put(0, classIndex_d);
 
@@ -46,30 +54,11 @@ public abstract class LibSVMInputFormat<T> extends BaseInputFormat<T> {
         return ret;
 
     }
-    protected Map<Integer,Double> parseRead(InputStream is, Map<Integer,Double> ret) throws IOException {
-        return parseRead(is,DELIM_NEWLINE, DELIM_COLON, ret);
+    protected Map<Integer,Double> parseRecord(InputStream is, Map<Integer,Double> ret) throws IOException {
+        return parseRecord(is,DELIM_NEWLINE, DELIM_COLON, ret);
     }
 
-    /**
-     * Read inputstream until delim is encountered; single byte character for now.
-     * @param delim -- a single byte character that demarcates the stream
-     * @param is
-     * @return
-     * @throws IOException
-     */
-    protected static String readLine(String delim, InputStream is) throws IOException {
-        String ret = new String();
-        String everything = new String(".*");
-        int c;
-        while ( (c = is.read()) != -1 ) {
-            char ch = (char) c;
-            if (ch == (delim.charAt(0))) {
-                break;
-            }
-            ret += new String(String.valueOf(ch));
-        }
-        return ret;
-    }
+
 
     @Override
     public abstract T read(String is, String delim) throws IOException;
@@ -84,7 +73,7 @@ public abstract class LibSVMInputFormat<T> extends BaseInputFormat<T> {
         return read(file, COMMA);
     }
     protected Map<Integer,Double> fileReader(FileInputStream file, String recordDelim, String splitDelim,Map<Integer,Double> ret) throws IOException {
-        return parseRead(file, recordDelim, splitDelim,ret);
+        return parseRecord(file, recordDelim, splitDelim, ret);
     }
 
 }
