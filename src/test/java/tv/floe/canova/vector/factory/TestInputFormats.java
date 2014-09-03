@@ -2,17 +2,14 @@ package tv.floe.canova.vector.factory;
 
 import junit.framework.TestCase;
 import org.deeplearning4j.linalg.jblas.NDArray;
-import org.deeplearning4j.util.MovingWindowMatrix;
 import org.junit.Test;
-import tv.floe.canova.formatters.MovingWindowMatrixInputFormat;
-import tv.floe.canova.formatters.MovingWindowMatrixOutputFormat;
+import tv.floe.canova.formatters.LibSVMInputFormat;
+import tv.floe.canova.formatters.LibSVMOutputFormat;
 import tv.floe.canova.formatters.NDArrayInputFormat;
 import tv.floe.canova.formatters.NDArrayOutputFormat;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * Created by mjk on 8/31/14.
@@ -71,38 +68,48 @@ public class TestInputFormats extends TestCase {
         f.delete();
     }
     @Test
-    public void testMatrixWindowFormat() {
-        NDArray cv = new NDArray(new float[2], new int[]{1,2});
-        NDArray cv_d = new NDArray(new float[3], new int[]{1,2,3});
+    public void testLibSVM() {
+        String a = "-1 3:1.0 11:1.3 14:1.0 19:1.0 39:1.0 42:1.0 \n-1 55:1.0 64:1.0 67:1.0 73:1.0 75:1.0 76:1.0 80:1.0 83:1.0 ";
+        String[] a_s = a.split("\n");
+        InputStream is = new ByteArrayInputStream( a.getBytes(  ) );
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 
-        NDArray cv1;
+        String m_out = null;
+        ConcurrentSkipListMap<Integer, Double> m = new ConcurrentSkipListMap<>();
+        ConcurrentSkipListMap<Integer, Double> m1 = new ConcurrentSkipListMap<>();
 
-        List<NDArray> l1 = new ArrayList<>();
-        List<NDArray> l2 = new ArrayList<>();
-
-        l1.add(cv);
-        l2.add(cv_d);
-
-        MovingWindowMatrix mo = new MovingWindowMatrix(cv, 1, 1);
-        MovingWindowMatrix mo1 = new MovingWindowMatrix(cv, 1, 1);
-
-        MovingWindowMatrix mo2 = new MovingWindowMatrix(cv_d, 1, 1);
-
-        MovingWindowMatrixInputFormat cvi = new MovingWindowMatrixInputFormat();
-        MovingWindowMatrixOutputFormat cvo = new MovingWindowMatrixOutputFormat();
-
-        String o = new String();
         try {
-            o = cvo.write(mo);
+            m = (ConcurrentSkipListMap<Integer, Double>) LibSVMInputFormat.parseRead(is,
+                    LibSVMInputFormat.DELIM_NEWLINE,
+                    LibSVMInputFormat.DELIM_COLON,
+                    m);
+
+             m_out = LibSVMOutputFormat.parseWrite(m,
+                    LibSVMOutputFormat.DELIM_NEWLINE,
+                    LibSVMOutputFormat.DELIM_COLON);
+            assertEquals(a_s[0], m_out);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         try {
-            mo1 = cvi.read(o);
-            assertEquals(mo1, mo);
+            m1= (ConcurrentSkipListMap<Integer, Double>) LibSVMInputFormat.parseRead(is,
+                    LibSVMInputFormat.DELIM_NEWLINE,
+                    LibSVMInputFormat.DELIM_COLON,
+                    m1);
+
+            m_out = LibSVMOutputFormat.parseWrite(m1,
+                    LibSVMOutputFormat.DELIM_NEWLINE,
+                    LibSVMOutputFormat.DELIM_COLON);
+
+            assertEquals(a_s[1], m_out);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+
     }
 }
