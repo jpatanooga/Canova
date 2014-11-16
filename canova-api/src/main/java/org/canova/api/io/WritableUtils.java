@@ -21,6 +21,7 @@ package org.canova.api.io;
 import java.io.*;
 
 
+import org.canova.api.conf.Configuration;
 import org.canova.api.util.ReflectionUtils;
 import org.canova.api.writable.Writable;
 

@@ -1,5 +1,12 @@
 package org.canova.api.io.serializers;
 
+import org.canova.api.conf.Configuration;
+import org.canova.api.conf.Configured;
+import org.canova.api.util.ReflectionUtils;
+import org.canova.api.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +17,8 @@ import java.util.List;
  */
 public class SerializationFactory extends Configured {
 
-    private static final Log LOG =
-            LogFactory.getLog(SerializationFactory.class.getName());
+    private static final Logger LOG =
+            LoggerFactory.getLogger(SerializationFactory.class.getName());
 
     private List<Serialization<?>> serializations = new ArrayList<Serialization<?>>();
 
@@ -36,7 +43,7 @@ public class SerializationFactory extends Configured {
 
             Class<? extends Serialization> serializionClass =
                     (Class<? extends Serialization>) conf.getClassByName(serializationName);
-            serializations.add((Serialization)
+            serializations.add(
                     ReflectionUtils.newInstance(serializionClass, getConf()));
         } catch (ClassNotFoundException e) {
             LOG.warn("Serilization class not found: " +

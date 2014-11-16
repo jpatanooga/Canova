@@ -18,6 +18,8 @@
 
 package org.canova.api.util;
 
+import org.canova.api.conf.Configurable;
+import org.canova.api.conf.Configuration;
 import org.canova.api.io.DataInputBuffer;
 import org.canova.api.io.DataOutputBuffer;
 import org.canova.api.io.serializers.Deserializer;
@@ -178,31 +180,6 @@ public class ReflectionUtils {
 
     private static long previousLogTime = 0;
 
-    /**
-     * Log the current thread stacks at INFO level.
-     * @param log the logger that logs the stack trace
-     * @param title a descriptive title for the call stacks
-     * @param minInterval the minimum time from the last
-     */
-    public static void logThreadInfo(Log log,
-                                     String title,
-                                     long minInterval) {
-        boolean dumpStack = false;
-        if (log.isInfoEnabled()) {
-            synchronized (ReflectionUtils.class) {
-                long now = System.currentTimeMillis();
-                if (now - previousLogTime >= minInterval * 1000) {
-                    previousLogTime = now;
-                    dumpStack = true;
-                }
-            }
-            if (dumpStack) {
-                ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-                printThreadInfo(new PrintWriter(buffer), title);
-                log.info(buffer.toString());
-            }
-        }
-    }
 
     /**
      * Return the correctly-typed {@link Class} of the given object.
