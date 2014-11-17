@@ -5,6 +5,9 @@ import org.canova.api.formats.output.OutputFormat;
 import org.canova.api.records.writer.RecordWriter;
 import org.canova.api.records.writer.impl.LineRecordWriter;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 /**
  * Line output format
  * @author Adam Gibson
@@ -12,6 +15,11 @@ import org.canova.api.records.writer.impl.LineRecordWriter;
 public class LineOutputFormat implements OutputFormat {
     @Override
     public RecordWriter createWriter(Configuration conf) {
-        return new LineRecordWriter();
+        String outputPath = conf.get(OutputFormat.OUTPUT_PATH,".");
+        try {
+            return new LineRecordWriter(new File(outputPath));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -5,6 +5,9 @@ import org.canova.api.formats.output.OutputFormat;
 import org.canova.api.records.writer.RecordWriter;
 import org.canova.api.records.writer.impl.CSVRecordWriter;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 /**
  * Creates an @link{CSVRecordWriter}
  *
@@ -13,6 +16,11 @@ import org.canova.api.records.writer.impl.CSVRecordWriter;
 public class CSVOutputFormat implements OutputFormat {
     @Override
     public RecordWriter createWriter(Configuration conf) {
-        return new CSVRecordWriter();
+        String outputPath = conf.get(OutputFormat.OUTPUT_PATH,".");
+        try {
+            return new CSVRecordWriter(new File(outputPath));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
