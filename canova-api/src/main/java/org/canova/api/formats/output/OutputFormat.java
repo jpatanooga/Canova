@@ -1,6 +1,7 @@
 package org.canova.api.formats.output;
 
 import org.canova.api.conf.Configuration;
+import org.canova.api.exceptions.CanovaException;
 import org.canova.api.records.writer.RecordWriter;
 
 /**
@@ -15,6 +16,6 @@ public interface OutputFormat {
      * Create a record writer
      * @return the created writer
      */
-    RecordWriter createWriter(Configuration conf);
+    RecordWriter createWriter(Configuration conf) throws CanovaException;
 
 }
