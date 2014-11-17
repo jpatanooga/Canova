@@ -46,8 +46,8 @@ public class LineRecordReader implements RecordReader {
         }
         else {
             currIndex++;
-            iter.close();
             try {
+                close();
                 iter = IOUtils.lineIterator(new InputStreamReader(locations[currIndex].toURL().openStream()));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -66,5 +66,11 @@ public class LineRecordReader implements RecordReader {
     @Override
     public boolean hasNext() {
         return iter != null && iter.hasNext();
+    }
+
+    @Override
+    public void close() throws IOException {
+        if(iter != null)
+            iter.close();
     }
 }

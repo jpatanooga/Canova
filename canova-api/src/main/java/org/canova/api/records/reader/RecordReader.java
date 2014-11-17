@@ -3,13 +3,15 @@ package org.canova.api.records.reader;
 import org.canova.api.split.InputSplit;
 import org.canova.api.writable.Writable;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.util.Collection;
 
 /**
- * Created by agibsonccc on 11/15/14.
+ * Record reader
+ * @author Adam Gibson
  */
-public interface RecordReader {
+public interface RecordReader extends Closeable {
 
     /**
      * Called once at initialization.

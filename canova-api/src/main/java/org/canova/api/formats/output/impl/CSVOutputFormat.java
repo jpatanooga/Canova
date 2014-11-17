@@ -1,7 +1,18 @@
 package org.canova.api.formats.output.impl;
 
+import org.canova.api.conf.Configuration;
+import org.canova.api.formats.output.OutputFormat;
+import org.canova.api.records.writer.RecordWriter;
+import org.canova.api.records.writer.impl.CSVRecordWriter;
+
 /**
- * Created by agibsonccc on 11/17/14.
+ * Creates an @link{CSVRecordWriter}
+ *
+ * @author Adam Gibson
  */
-public class CSVOutputFormat {
+public class CSVOutputFormat implements OutputFormat {
+    @Override
+    public RecordWriter createWriter(Configuration conf) {
+        return new CSVRecordWriter();
+    }
 }

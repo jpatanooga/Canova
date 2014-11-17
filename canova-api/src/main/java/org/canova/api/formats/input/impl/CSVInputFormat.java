@@ -2,6 +2,7 @@ package org.canova.api.formats.input.impl;
 
 import org.canova.api.formats.input.InputFormat;
 import org.canova.api.records.reader.RecordReader;
+import org.canova.api.records.reader.impl.CSVRecordReader;
 import org.canova.api.records.reader.impl.LineRecordReader;
 import org.canova.api.split.InputSplit;
 
@@ -16,7 +17,7 @@ import java.io.IOException;
 public class CSVInputFormat implements InputFormat {
     @Override
     public RecordReader createReader(InputSplit split) throws IOException, InterruptedException {
-        LineRecordReader ret = new LineRecordReader();
+        CSVRecordReader ret = new CSVRecordReader();
         ret.initialize(split);
         return ret;
 
