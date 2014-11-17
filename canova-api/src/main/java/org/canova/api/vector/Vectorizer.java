@@ -1,6 +1,8 @@
 package org.canova.api.vector;
 
-import org.canova.api.records.Record;
+import org.canova.api.writable.Writable;
+
+import java.util.Collection;
 
 /**
  * Vectorizer of a particular type.
@@ -16,7 +18,7 @@ public interface Vectorizer<VECTOR_TYPE> {
      * @param record the record to write
      * @return
      */
-    VECTOR_TYPE transform(Record record);
+    VECTOR_TYPE transform(Collection<Writable> record);
 
 
 }
