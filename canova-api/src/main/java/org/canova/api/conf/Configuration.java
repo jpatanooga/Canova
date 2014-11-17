@@ -18,11 +18,9 @@
 
 package org.canova.api.conf;
 
-import java.io.BufferedInputStream;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -1452,8 +1450,8 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
         clear();
         int size = WritableUtils.readVInt(in);
         for(int i=0; i < size; ++i) {
-            set(org.canova.api.io.Text.readString(in),
-                    org.canova.api.io.Text.readString(in));
+            set(org.canova.api.io.data.Text.readString(in),
+                    org.canova.api.io.data.Text.readString(in));
         }
     }
 
@@ -1462,8 +1460,8 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
         Properties props = getProps();
         WritableUtils.writeVInt(out, props.size());
         for(Map.Entry<Object, Object> item: props.entrySet()) {
-            org.canova.api.io.Text.writeString(out, (String) item.getKey());
-            org.canova.api.io.Text.writeString(out, (String) item.getValue());
+            org.canova.api.io.data.Text.writeString(out, (String) item.getKey());
+            org.canova.api.io.data.Text.writeString(out, (String) item.getValue());
         }
     }
 

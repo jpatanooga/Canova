@@ -1,6 +1,9 @@
 package org.canova.api.records.writer;
 
-import org.canova.api.records.Record;
+
+import org.canova.api.writable.Writable;
+
+import java.util.Collection;
 
 /**
  *  Record writer
@@ -13,6 +16,6 @@ public interface RecordWriter {
      * Write a record
      * @param record the record to write
      */
-    void write(Record record);
+    void write(Collection<Writable> record);
 
 }

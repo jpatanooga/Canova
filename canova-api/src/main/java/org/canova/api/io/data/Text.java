@@ -16,8 +16,12 @@
  * limitations under the License.
  */
 
-package org.canova.api.io;
+package org.canova.api.io.data;
 
+import org.canova.api.io.BinaryComparable;
+import org.canova.api.io.WritableComparable;
+import org.canova.api.io.WritableComparator;
+import org.canova.api.io.WritableUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

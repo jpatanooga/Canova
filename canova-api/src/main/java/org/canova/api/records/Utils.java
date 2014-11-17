@@ -107,7 +107,7 @@ public class Utils {
      * @return
      */
     static String toCSVString(String s) {
-        StringBuffer sb = new StringBuffer(s.length()+1);
+        StringBuffer sb = new StringBuffer(s.length() + 1);
         sb.append('\'');
         int len = s.length();
         for (int i = 0; i < len; i++) {

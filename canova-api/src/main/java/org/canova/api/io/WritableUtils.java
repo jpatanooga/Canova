@@ -22,6 +22,7 @@ import java.io.*;
 
 
 import org.canova.api.conf.Configuration;
+import org.canova.api.io.data.*;
 import org.canova.api.util.ReflectionUtils;
 import org.canova.api.writable.Writable;
 
@@ -29,6 +30,9 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 public final class WritableUtils  {
+
+
+
 
     public static byte[] readCompressedByteArray(DataInput in) throws IOException {
         int length = in.readInt();
