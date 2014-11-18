@@ -1,6 +1,7 @@
 package org.canova.api.records.reader.impl;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.canova.api.io.data.Text;
 import org.canova.api.records.reader.RecordReader;
 import org.canova.api.split.InputSplit;
@@ -8,6 +9,7 @@ import org.canova.api.writable.Writable;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.*;
 
@@ -35,15 +37,33 @@ public class FileRecordReader implements RecordReader {
     @Override
     public Collection<Writable> next() {
         List<Writable> ret = new ArrayList<>();
+        try {
+            ret.add(new Text(FileUtils.readFileToString(iter.next())));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         if(iter.hasNext()) {
+            return ret;
+        }
+        else {
+            currIndex++;
             try {
-                ret.add(new Text(FileUtils.readFileToString(iter.next())));
+                close();
+                iter = IOUtils.lineIterator(new InputStreamReader(locations[currIndex].toURL().openStream()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return ret;
-        }
 
+            if(iter.hasNext()) {
+                try {
+                    ret.add(new Text(FileUtils.readFileToString(iter.next())));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return ret;
+            }
+
+        }
 
         throw new NoSuchElementException("No more elements found!");
     }
