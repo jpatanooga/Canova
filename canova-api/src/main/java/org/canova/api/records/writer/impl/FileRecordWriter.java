@@ -1,14 +1,17 @@
 package org.canova.api.records.writer.impl;
 
+import org.canova.api.io.data.Text;
 import org.canova.api.records.writer.RecordWriter;
+import org.canova.api.writable.Writable;
 
 import java.io.*;
+import java.util.Collection;
 
 /**
  * Write to files
  * @author Adam Gibson
  */
-public abstract class FileRecordWriter implements RecordWriter {
+public  class FileRecordWriter implements RecordWriter {
 
     protected File writeTo;
     protected DataOutputStream out;
@@ -19,6 +22,14 @@ public abstract class FileRecordWriter implements RecordWriter {
         out = new DataOutputStream(new FileOutputStream(writeTo));
     }
 
+
+    @Override
+    public void write(Collection<Writable> record) throws IOException {
+        if(!record.isEmpty()) {
+            Text t = (Text) record.iterator().next();
+            t.write(out);
+        }
+    }
 
     @Override
     public void close() {
