@@ -12,6 +12,7 @@
     <modules>
         <module>canova-api</module>
         <module>canova-nd4j</module>
+        <module>canova-data</module>
     </modules>
     <name>Canova</name>
 
