@@ -1,5 +1,7 @@
 package org.canova.api.vector;
 
+import org.canova.api.conf.Configuration;
+import org.canova.api.records.reader.RecordReader;
 import org.canova.api.writable.Writable;
 
 import java.util.Collection;
@@ -12,6 +14,24 @@ import java.util.Collection;
  */
 public interface Vectorizer<VECTOR_TYPE> {
 
+
+    /**
+     * Initialize based on a configuration
+     * @param conf the configuration to use
+     */
+    void initialize(Configuration conf);
+
+    /**
+     * Fit based on a record reader
+     * @param reader
+     */
+    void fit(RecordReader reader);
+
+    /**
+     * Fit based on a record reader
+     * @param reader
+     */
+    VECTOR_TYPE fitTransform(RecordReader reader);
 
     /**
      * Transform a record in to a vector
