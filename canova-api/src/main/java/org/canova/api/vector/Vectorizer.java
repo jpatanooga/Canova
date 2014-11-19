@@ -16,6 +16,14 @@ public interface Vectorizer<VECTOR_TYPE> {
 
 
     /**
+     * Create a vector based on the given arguments
+     * @param args the arguments to create a vector with
+     * @return the created vector
+     *
+     */
+    VECTOR_TYPE createVector(Object[] args);
+
+    /**
      * Initialize based on a configuration
      * @param conf the configuration to use
      */
