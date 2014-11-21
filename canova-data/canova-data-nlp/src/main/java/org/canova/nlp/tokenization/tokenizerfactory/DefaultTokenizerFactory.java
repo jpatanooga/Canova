@@ -1,9 +1,11 @@
-package org.canova.nlp.tokenizer.api.tokenization.tokenizerfactory;
+package org.canova.nlp.tokenization.tokenizerfactory;
 
-import org.deeplearning4j.text.tokenization.tokenizer.DefaultStreamTokenizer;
-import org.deeplearning4j.text.tokenization.tokenizer.DefaultTokenizer;
-import org.deeplearning4j.text.tokenization.tokenizer.TokenPreProcess;
-import org.deeplearning4j.text.tokenization.tokenizer.Tokenizer;
+
+
+import org.canova.nlp.tokenization.tokenizer.DefaultStreamTokenizer;
+import org.canova.nlp.tokenization.tokenizer.DefaultTokenizer;
+import org.canova.nlp.tokenization.tokenizer.TokenPreProcess;
+import org.canova.nlp.tokenization.tokenizer.Tokenizer;
 
 import java.io.InputStream;
 

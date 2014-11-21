@@ -4,6 +4,9 @@ import org.canova.api.conf.Configuration;
 import org.canova.api.records.reader.RecordReader;
 import org.canova.api.vector.Vectorizer;
 import org.canova.api.writable.Writable;
+import org.canova.nlp.metadata.DefaultVocabCache;
+import org.canova.nlp.metadata.VocabCache;
+import org.canova.nlp.stopwords.StopWords;
 import org.canova.nlp.tokenization.tokenizer.Tokenizer;
 import org.canova.nlp.tokenization.tokenizerfactory.TokenizerFactory;
 
@@ -11,6 +14,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Baseline text vectorizer that includes some common elements
@@ -21,10 +25,19 @@ import java.util.Collection;
 public abstract class TextVectorizer<VECTOR_TYPE> implements Vectorizer<VECTOR_TYPE> {
 
     protected TokenizerFactory tokenizerFactory;
+    protected int minWordFrequency = 0;
+    public final static String MIN_WORD_FREQUENCY = "org.canova.nlp.minwordfrequency";
+    public final static String STOP_WORDS = "org.canova.nlp.stopwords";
+    protected Collection<String> stopWords;
+    protected VocabCache cache = new DefaultVocabCache();
 
     @Override
     public void initialize(Configuration conf) {
-         tokenizerFactory = createTokenizerFactory(conf);
+        tokenizerFactory = createTokenizerFactory(conf);
+        minWordFrequency = conf.getInt(MIN_WORD_FREQUENCY,5);
+        stopWords = conf.getStringCollection(STOP_WORDS);
+        if(stopWords == null || stopWords.isEmpty())
+            stopWords = StopWords.getStopWords();
     }
 
     @Override
@@ -48,6 +61,7 @@ public abstract class TextVectorizer<VECTOR_TYPE> implements Vectorizer<VECTOR_T
 
         }
     }
+
 
 
 

@@ -1,14 +1,15 @@
-package org.canova.nlp.tokenizer.api.tokenization.tokenizerfactory;
+package org.canova.nlp.tokenization.tokenizerfactory;
 
 
 import org.apache.uima.analysis_engine.AnalysisEngine;
-import org.deeplearning4j.text.annotator.PoStagger;
-import org.deeplearning4j.text.annotator.SentenceAnnotator;
-import org.deeplearning4j.text.annotator.StemmerAnnotator;
-import org.deeplearning4j.text.annotator.TokenizerAnnotator;
-import org.deeplearning4j.text.tokenization.tokenizer.PosUimaTokenizer;
-import org.deeplearning4j.text.tokenization.tokenizer.TokenPreProcess;
-import org.deeplearning4j.text.tokenization.tokenizer.Tokenizer;
+import org.canova.nlp.annotator.PoStagger;
+import org.canova.nlp.annotator.SentenceAnnotator;
+import org.canova.nlp.annotator.StemmerAnnotator;
+import org.canova.nlp.annotator.TokenizerAnnotator;
+import org.canova.nlp.tokenization.tokenizer.PosUimaTokenizer;
+import org.canova.nlp.tokenization.tokenizer.TokenPreProcess;
+import org.canova.nlp.tokenization.tokenizer.Tokenizer;
+
 
 import java.io.InputStream;
 import java.util.Collection;
