@@ -5,7 +5,10 @@
     <groupId>org.canova</groupId>
     <artifactId>canova-nd4j</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <modules>
+        <module>canova-nd4j-nlp</module>
+    </modules>
+    <packaging>pom</packaging>
 
     <name>canova-nd4j</name>
     <url>http://maven.apache.org</url>
@@ -15,17 +18,4 @@
         <nd4j.version>0.0.3.5.4</nd4j.version>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.nd4j</groupId>
-            <artifactId>nd4j-api</artifactId>
-            <version>${nd4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.nd4j</groupId>
-            <artifactId>nd4j-jblas</artifactId>
-            <version>${nd4j.version}</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 </project>

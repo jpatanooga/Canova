@@ -41,12 +41,41 @@ public interface Vectorizer<VECTOR_TYPE> {
      */
     VECTOR_TYPE fitTransform(RecordReader reader);
 
+
+    /**
+     * Fit based on a record reader
+     * @param reader
+     * @param callBack
+     */
+    void fit(RecordReader reader,RecordCallBack callBack);
+
+    /**
+     * Fit based on a record reader
+     * @param reader
+     * @param callBack
+     */
+    VECTOR_TYPE fitTransform(RecordReader reader,RecordCallBack callBack);
+
     /**
      * Transform a record in to a vector
      * @param record the record to write
      * @return
      */
     VECTOR_TYPE transform(Collection<Writable> record);
+
+
+    /**
+     * On record call back.
+     * This allows for neat inheritance and polymorphism
+     * for fit and fit/transform among other things
+     */
+    public static interface RecordCallBack {
+        /**
+         * The record callback
+         * @param record
+         */
+        void onRecord(Collection<Writable> record);
+    }
 
 
 }

@@ -13,6 +13,13 @@ public interface VocabCache {
 
 
     /**
+     * Returns a word in the vocab at a particular index
+     * @param i the index to get
+     * @return the word at that index in the vocab
+     */
+    String wordAt(int i);
+
+    /**
      * Configuration for initializing
      * @param conf the configuration to initialize with
      */
@@ -73,5 +80,13 @@ public interface VocabCache {
      * @param word the word to get the idf for
      */
     double idf(String word);
+
+    /**
+     * Calculate the tfidf of the word given the document frequency
+     * @param word the word to get frequency for
+     * @param frequency the frequency
+     * @return the tfidf for a word
+     */
+    double tfidf(String word,double frequency);
 
 }
