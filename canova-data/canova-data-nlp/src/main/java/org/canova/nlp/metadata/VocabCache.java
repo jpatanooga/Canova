@@ -13,6 +13,18 @@ public interface VocabCache {
 
 
     /**
+     * Increment the number of documents
+     * @param by
+     */
+    void incrementNumDocs(double by);
+
+    /**
+     * Number of documents
+     * @return the number of documents
+     */
+    double numDocs();
+
+    /**
      * Returns a word in the vocab at a particular index
      * @param i the index to get
      * @return the word at that index in the vocab
@@ -46,7 +58,7 @@ public interface VocabCache {
      * note that these are not all the possible tokens
      * @return the list of vocab words
      */
-    List<String> vocabWords();
+    org.canova.api.util.Index vocabWords();
 
 
     /**

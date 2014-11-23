@@ -39,6 +39,7 @@ public abstract class TextVectorizer<VECTOR_TYPE> implements Vectorizer<VECTOR_T
         stopWords = conf.getStringCollection(STOP_WORDS);
         if(stopWords == null || stopWords.isEmpty())
             stopWords = StopWords.getStopWords();
+        cache = new DefaultVocabCache();
     }
 
     @Override
@@ -52,6 +53,7 @@ public abstract class TextVectorizer<VECTOR_TYPE> implements Vectorizer<VECTOR_T
             Collection<Writable> record = reader.next();
             String s = toString(record);
             Tokenizer tokenizer = tokenizerFactory.create(s);
+            cache.incrementNumDocs(1);
             doWithTokens(tokenizer);
             if(callBack != null)
                 callBack.onRecord(record);

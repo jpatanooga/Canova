@@ -1,6 +1,7 @@
 package org.canova.api.util;
 
-import org.deeplearning4j.berkeley.Pair;
+
+import org.canova.api.berkeley.Pair;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

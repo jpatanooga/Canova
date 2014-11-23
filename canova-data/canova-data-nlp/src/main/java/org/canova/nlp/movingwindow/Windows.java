@@ -1,9 +1,10 @@
 package org.canova.nlp.movingwindow;
 
-import org.deeplearning4j.berkeley.StringUtils;
-import org.deeplearning4j.text.tokenization.tokenizer.DefaultStreamTokenizer;
-import org.deeplearning4j.text.tokenization.tokenizer.Tokenizer;
-import org.deeplearning4j.text.tokenization.tokenizerfactory.TokenizerFactory;
+
+import org.apache.commons.lang3.StringUtils;
+import org.canova.nlp.tokenization.tokenizer.DefaultStreamTokenizer;
+import org.canova.nlp.tokenization.tokenizer.Tokenizer;
+import org.canova.nlp.tokenization.tokenizerfactory.TokenizerFactory;
 
 import java.io.InputStream;
 import java.util.ArrayList;

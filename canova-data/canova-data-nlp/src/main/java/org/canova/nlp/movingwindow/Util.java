@@ -1,7 +1,9 @@
 package org.canova.nlp.movingwindow;
 
-import org.deeplearning4j.berkeley.Counter;
-import org.deeplearning4j.berkeley.MapFactory;
+
+
+import org.canova.api.berkeley.Counter;
+import org.canova.api.berkeley.MapFactory;
 
 import java.util.List;
 import java.util.Map;
