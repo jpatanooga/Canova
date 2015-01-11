@@ -16,12 +16,16 @@ public  class FileRecordWriter implements RecordWriter {
     protected File writeTo;
     protected DataOutputStream out;
     public final static String NEW_LINE = "\n";
-
+    private boolean append;
     public FileRecordWriter(File path) throws FileNotFoundException {
         this.writeTo = path;
-        out = new DataOutputStream(new FileOutputStream(writeTo));
+        out = new DataOutputStream(new FileOutputStream(writeTo,append));
     }
-
+    public FileRecordWriter(File path,boolean append) throws FileNotFoundException {
+        this.writeTo = path;
+        this.append = append;
+        out = new DataOutputStream(new FileOutputStream(writeTo,append));
+    }
 
     @Override
     public void write(Collection<Writable> record) throws IOException {

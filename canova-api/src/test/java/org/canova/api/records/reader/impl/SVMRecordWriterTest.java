@@ -1,6 +1,7 @@
 package org.canova.api.records.reader.impl;
 
 import static org.junit.Assume.*;
+import static org.junit.Assert.*;
 
 import org.apache.commons.io.IOUtils;
 import org.canova.api.records.reader.RecordReader;
@@ -53,13 +54,16 @@ public class SVMRecordWriterTest {
         assertEquals(150,count);
         File out = new File("iris_out.txt");
         out.deleteOnExit();
-        RecordWriter writer = new SVMLightRecordWriter(out);
+        RecordWriter writer = new SVMLightRecordWriter(out,true);
         for(Collection<Writable> record : records)
             writer.write(record);
+
+        writer.close();
 
         RecordReader svmReader = new SVMLightRecordReader();
         InputSplit svmSplit = new FileSplit(out);
         svmReader.initialize(svmSplit);
+        assertTrue(svmReader.hasNext());
         while(svmReader.hasNext()) {
             Collection<Writable> record = svmReader.next();
             records.add(record);
