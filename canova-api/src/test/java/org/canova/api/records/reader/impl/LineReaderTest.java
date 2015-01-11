@@ -31,7 +31,7 @@ public class LineReaderTest {
         reader.initialize(split);
         int count = 0;
         while(reader.hasNext()) {
-           assertEquals(1,reader.next().size());
+            assertEquals(1,reader.next().size());
             count++;
         }
 
