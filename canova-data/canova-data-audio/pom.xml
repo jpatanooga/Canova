@@ -1,27 +1,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>canova-parent</artifactId>
+        <artifactId>canova-data</artifactId>
         <groupId>org.canova</groupId>
         <version>0.0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>canova-data</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>canova-data-audio</artifactId>
+    <packaging>jar</packaging>
 
-    <name>canova-data</name>
+    <name>canova-data-audio</name>
     <url>http://maven.apache.org</url>
-    <modules>
-        <module>canova-data-nlp</module>
-        <module>canova-data-image</module>
-        <module>canova-data-timeseries</module>
-        <module>canova-data-audio</module>
-    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-
+    <dependencies>
+    </dependencies>
 </project>
